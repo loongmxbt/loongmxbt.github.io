@@ -1,0 +1,201 @@
+<html lang="en">
+<head>
+
+  
+  <meta charset="utf-8">
+  <title>使用 Hugo 搭建 Github 静态博客</title>
+  <meta name="description" content="使用 Hugo 搭建 Github 静态博客">
+  <meta name="author" content="Saint Asky">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="http://loongmxbt.github.io//css/fonts.css">
+  <link rel="stylesheet" href="http://loongmxbt.github.io//css/normalize.css">
+  <link rel="stylesheet" href="http://loongmxbt.github.io//css/skeleton.css">
+  <link rel="stylesheet" href="http://loongmxbt.github.io//css/custom.css">
+</head>
+<body>
+
+<header id="menu">
+  <div class="container">
+	<span class="logo">梦溪笔谈</span>
+	<a>&#9776;</a>
+  </div>
+</header>
+
+<nav class="navbar">
+  <div class="container">
+	<div class="row">
+	  <div class="eight columns offset-by-two">
+		<ul class="">
+		  
+		  <li class="u-pull-left"> <a href="http://loongmxbt.github.io/" class="brand" style="font-weight:bold;font-size:normal"> 梦溪笔谈 </a></li>
+		  <li class="u-pull-right cate"> <a href="http://loongmxbt.github.io//about/" class=""> About </a></li>
+		  
+		  <li class="u-pull-right cate"> <a href="http://loongmxbt.github.io//categories/web" class=""> Web </a></li>
+		  
+		</ul>
+	  </div>
+	</div>
+  </div>
+</nav>
+
+
+<div class="container post-wrapper">
+  <div class="row">
+	<div class="eight columns offset-by-two">
+	  <div id="post-title">
+		<p class="footnote">
+		  
+		  <time class="">2015-03-04</time>
+		  
+		  
+		  |
+		  
+		  
+		  tags:<a href="http://loongmxbt.github.io//tags/hugo">Hugo</a> <a href="http://loongmxbt.github.io//tags/go">Go</a> <a href="http://loongmxbt.github.io//tags/github">Github</a> <a href="http://loongmxbt.github.io//tags/%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2">静态博客</a> 
+		  
+
+		  
+		  categories:<a href="http://loongmxbt.github.io//categories/web">Web</a> 
+		  
+
+		  
+
+		</p>
+		<h5>使用 Hugo 搭建 Github 静态博客</h5>
+	  </div>
+
+	  <div class="post">
+		
+
+<h3 id="github-静态博客是啥:f335be6568e4945d1f62056ad1d6d66b">Github 静态博客是啥</h3>
+
+<p>自从 Github 推出 Pages 服务以来，静态博客程序就层出不穷。所谓『静态博客』，就是所有页面均为 HTML 静态页面的博客。与常见的 Wordpress 等动态博客系统不同，它没有数据库，没有动态语言，没有复杂的后台管理。静态博客有着轻量、快捷、安全等优势，配合以 Git 版本控制系统与 Github 托管服务，使写作更为方便流畅。</p>
+
+<p>常见的静态博客系统有 <a href="https://github.com/jekyll/jekyll">Jekyll</a> (Ruby)，<a href="https://github.com/imathis/octopress">Octopress</a> (Ruby)，<a href="https://github.com/hexojs/hexo">Hexo</a> (Node.js)等，更多的系统请参见<a href="http://www.chinaz.com/special/static-blog/index.html">这里</a>。</p>
+
+<p>静态博客程序通常使用 <a href="http://wowubuntu.com/markdown/basic.html">Markdown</a> 格式编辑页面和文章，然后通过程序生成 HTML 静态页面，通过 Git 命令推送至 Github 上，由 <code>username.github.io</code> 子域名进行访问。</p>
+
+<h3 id="hugo-是啥:f335be6568e4945d1f62056ad1d6d66b">Hugo 是啥</h3>
+
+<p><a href="http://gohugo.io/">Hugo</a> 是基于 Go 语言的静态博客系统。</p>
+
+<h3 id="安装-hugo:f335be6568e4945d1f62056ad1d6d66b">安装 Hugo</h3>
+
+<p>Hugo 的安装非常简单，只要下载对应系统的可执行文件即可，点击<a href="https://github.com/spf13/hugo/releases">这里</a>下载，下载完成后添加至 <code>PATH</code> 即可。如果你是 Mac 用户并使用 <code>homebrew</code> 只需执行如下命令：</p>
+
+<pre><code>brew install hugo
+</code></pre>
+
+<h3 id="本地搭建:f335be6568e4945d1f62056ad1d6d66b">本地搭建</h3>
+
+<p>创建页面：</p>
+
+<pre><code>$ hugo new about.md
+</code></pre>
+
+<p>创建文章：</p>
+
+<pre><code>$ hugo new post/first.md
+</code></pre>
+
+<p>下载全部主题：</p>
+
+<pre><code>$ git clone --recursive https://github.com/spf13/hugoThemes themes
+</code></pre>
+
+<p>下载单个主题：</p>
+
+<pre><code>$ mkdir themes
+$ cd themes
+$ git clone URL_TO_THEME
+</code></pre>
+
+<p>运行 Hugo：</p>
+
+<pre><code>$ hugo server --theme=hyde --buildDrafts
+</code></pre>
+
+<h3 id="部署至-github:f335be6568e4945d1f62056ad1d6d66b">部署至 Github</h3>
+
+<p>在 Github 上搭建个人博客需要注意两点：</p>
+
+<ul>
+<li>你必须使用 <code>username.github.io</code> 创建 repo</li>
+<li><code>master</code> 分支下的内容将被用来搭建发布 Github Pages</li>
+</ul>
+
+<p>我们将创建两个 repo，一个用来存放 Hugo 的内容，一个 git 子模块存放 <code>public</code> 的内容。</p>
+
+<ol>
+<li>创建 GitHub <code>&lt;your-project&gt;-hugo</code> 仓库 (它将存储 Hugo 的内容)</li>
+<li>创建 GitHub <code>&lt;username&gt;.github.io</code> 仓库 (它将存储 <code>public</code> 文件夹: 即网站的静态版本)</li>
+<li><code>git clone &lt;&lt;your-project&gt;-hugo-url&gt; &amp;&amp; cd &lt;your-project&gt;-hugo</code></li>
+<li>在本地运行网站 (<code>hugo serve --watch -t &lt;yourtheme&gt;</code>)</li>
+<li>如果你对结果满意, <code>Ctrl+C</code> (kill server) and <code>rm -rf public</code> (别着急，你可以通过 <code>hugo -t &lt;yourtheme&gt;</code> 重新生成)</li>
+<li><code>git submodule add git@github.com:&lt;username&gt;/&lt;username&gt;.github.io.git public</code></li>
+<li>基本完成: 创建 <code>deploy.sh</code> 脚本实现自动化管理 (别忘了给它可执行权限: <code>chmod +x deploy.sh</code>):</li>
+</ol>
+
+	  </div>
+	</div>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="container">
+	<div class="row">
+	  <div class="ten columns offset-by-two">
+		<p class="footnote">
+		  
+		  Copyright (c) 2014 - 2015, Saint Asky; all rights reserved.
+		  
+		  
+		  Find me at
+
+		  
+		  <a href="https://github.com/loongmxbt" >GitHub</a>
+		  
+
+		  
+
+		  
+		  <a href="https://twitter.com/dragonszy">Twitter</a>
+		  
+
+		  
+
+		  
+		</p>
+	  </div>
+	</div>
+  </div>
+</div>
+
+
+<script src="http://loongmxbt.github.io//js/jquery.min.js" type="text/javascript"></script>
+<script src="http://loongmxbt.github.io//js/jquery.timeago.js" type="text/javascript"></script>
+<script type="text/javascript">
+  $(function(){
+    $("time.timeago").timeago();
+  })
+  $("#menu").click(function(){
+    $(".brand").text("HOME");
+    $(".navbar ul li").removeClass("cate");
+    $(".navbar").toggle();
+  });
+  $(window).resize(function(){
+    if(window.innerWidth > 768) {
+      $(".navbar").removeAttr("style");
+    }
+  });
+</script>
+
+</body>
+</html>
+
