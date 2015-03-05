@@ -66,6 +66,13 @@ $ git clone URL_TO_THEME
 &lt;pre&gt;&lt;code&gt;$ hugo server --theme=hyde --buildDrafts
 &lt;/code&gt;&lt;/pre&gt;
 
+&lt;p&gt;或者&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ hugo server -t nofancy
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;注意，默认创建的文章页面有 &lt;code&gt;draft=true&lt;/code&gt; 选项，设置为 false 才可以不通过 &lt;code&gt;--buildDrafts&lt;/code&gt; 选项生成。&lt;/p&gt;
+
 &lt;h3 id=&#34;部署至-github:f335be6568e4945d1f62056ad1d6d66b&#34;&gt;部署至 Github&lt;/h3&gt;
 
 &lt;p&gt;在 Github 上搭建个人博客需要注意两点：&lt;/p&gt;
@@ -78,10 +85,10 @@ $ git clone URL_TO_THEME
 &lt;p&gt;我们将创建两个 repo，一个用来存放 Hugo 的内容，一个 git 子模块存放 &lt;code&gt;public&lt;/code&gt; 的内容。&lt;/p&gt;
 
 &lt;ol&gt;
-&lt;li&gt;创建 GitHub &lt;code&gt;&amp;lt;your-project&amp;gt;-hugo&lt;/code&gt; 仓库 (它将存储 Hugo 的内容)&lt;/li&gt;
+&lt;li&gt;创建 GitHub &lt;code&gt;&amp;lt;your-project&amp;gt;-hugo&lt;/code&gt; 仓库 (它将存储 Hugo 的内容，注意将 &lt;code&gt;public&lt;/code&gt; 目录添加至 &lt;code&gt;.gitignore&lt;/code&gt; 中)&lt;/li&gt;
 &lt;li&gt;创建 GitHub &lt;code&gt;&amp;lt;username&amp;gt;.github.io&lt;/code&gt; 仓库 (它将存储 &lt;code&gt;public&lt;/code&gt; 文件夹: 即网站的静态版本)&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;git clone &amp;lt;&amp;lt;your-project&amp;gt;-hugo-url&amp;gt; &amp;amp;&amp;amp; cd &amp;lt;your-project&amp;gt;-hugo&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;在本地运行网站 (&lt;code&gt;hugo serve --watch -t &amp;lt;yourtheme&amp;gt;&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;在本地运行网站 (&lt;code&gt;hugo server --watch -t &amp;lt;yourtheme&amp;gt;&lt;/code&gt;)&lt;/li&gt;
 &lt;li&gt;如果你对结果满意, &lt;code&gt;Ctrl+C&lt;/code&gt; (kill server) and &lt;code&gt;rm -rf public&lt;/code&gt; (别着急，你可以通过 &lt;code&gt;hugo -t &amp;lt;yourtheme&amp;gt;&lt;/code&gt; 重新生成)&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;git submodule add git@github.com:&amp;lt;username&amp;gt;/&amp;lt;username&amp;gt;.github.io.git public&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;基本完成: 创建 &lt;code&gt;deploy.sh&lt;/code&gt; 脚本实现自动化管理 (别忘了给它可执行权限: &lt;code&gt;chmod +x deploy.sh&lt;/code&gt;):&lt;/li&gt;

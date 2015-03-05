@@ -121,6 +121,13 @@ $ git clone URL_TO_THEME
 <pre><code>$ hugo server --theme=hyde --buildDrafts
 </code></pre>
 
+<p>或者</p>
+
+<pre><code>$ hugo server -t nofancy
+</code></pre>
+
+<p>注意，默认创建的文章页面有 <code>draft=true</code> 选项，设置为 false 才可以不通过 <code>--buildDrafts</code> 选项生成。</p>
+
 <h3 id="部署至-github:f335be6568e4945d1f62056ad1d6d66b">部署至 Github</h3>
 
 <p>在 Github 上搭建个人博客需要注意两点：</p>
@@ -133,10 +140,10 @@ $ git clone URL_TO_THEME
 <p>我们将创建两个 repo，一个用来存放 Hugo 的内容，一个 git 子模块存放 <code>public</code> 的内容。</p>
 
 <ol>
-<li>创建 GitHub <code>&lt;your-project&gt;-hugo</code> 仓库 (它将存储 Hugo 的内容)</li>
+<li>创建 GitHub <code>&lt;your-project&gt;-hugo</code> 仓库 (它将存储 Hugo 的内容，注意将 <code>public</code> 目录添加至 <code>.gitignore</code> 中)</li>
 <li>创建 GitHub <code>&lt;username&gt;.github.io</code> 仓库 (它将存储 <code>public</code> 文件夹: 即网站的静态版本)</li>
 <li><code>git clone &lt;&lt;your-project&gt;-hugo-url&gt; &amp;&amp; cd &lt;your-project&gt;-hugo</code></li>
-<li>在本地运行网站 (<code>hugo serve --watch -t &lt;yourtheme&gt;</code>)</li>
+<li>在本地运行网站 (<code>hugo server --watch -t &lt;yourtheme&gt;</code>)</li>
 <li>如果你对结果满意, <code>Ctrl+C</code> (kill server) and <code>rm -rf public</code> (别着急，你可以通过 <code>hugo -t &lt;yourtheme&gt;</code> 重新生成)</li>
 <li><code>git submodule add git@github.com:&lt;username&gt;/&lt;username&gt;.github.io.git public</code></li>
 <li>基本完成: 创建 <code>deploy.sh</code> 脚本实现自动化管理 (别忘了给它可执行权限: <code>chmod +x deploy.sh</code>):</li>
