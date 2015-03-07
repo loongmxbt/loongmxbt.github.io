@@ -156,6 +156,50 @@ $ git clone URL_TO_THEME
 <li>基本完成: 创建 <code>deploy.sh</code> 脚本实现自动化管理 (别忘了给它可执行权限: <code>chmod +x deploy.sh</code>):</li>
 </ol>
 
+<pre><code class="language-bash">#!/bin/bash
+
+echo -e &quot;\033[0;32mDeploying updates to GitHub...\033[0m&quot;
+
+# Build the project. 
+hugo # if using a theme, replace by `hugo -t &lt;yourtheme&gt;`
+
+# Go To Public folder
+cd public
+# Add changes to git.
+git add -A
+
+# Commit changes.
+msg=&quot;rebuilding site `date`&quot;
+if [ $# -eq 1 ]
+  then msg=&quot;$1&quot;
+fi
+git commit -m &quot;$msg&quot;
+
+# Push source and build repos.
+git push origin master
+
+# Come Back
+cd ..
+</code></pre>
+
+<h3 id="增加代码高亮支持:f335be6568e4945d1f62056ad1d6d66b">增加代码高亮支持</h3>
+
+<p>将以下代码添加至 <code>themes/theme-name/layouts/partials/headerer.html</code></p>
+
+<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://yandex.st/highlightjs/8.0/styles/default.min.css&quot;&gt;
+&lt;script src=&quot;https://yandex.st/highlightjs/8.0/highlight.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;
+</code></pre>
+
+<h3 id="增加数学公式支持:f335be6568e4945d1f62056ad1d6d66b">增加数学公式支持</h3>
+
+<p>将以下代码添加至 <code>themes/theme-name/layouts/partials/footer.html</code></p>
+
+<pre><code class="language-html">&lt;script type=&quot;text/javascript&quot;
+  src=&quot;https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;&gt;
+&lt;/script&gt;
+</code></pre>
+
 	  </div>
 	</div>
   </div>
