@@ -34,41 +34,41 @@
 
 &lt;p&gt;Hugo 的安装非常简单，只要下载对应系统的可执行文件即可，点击&lt;a href=&#34;https://github.com/spf13/hugo/releases&#34;&gt;这里&lt;/a&gt;下载，下载完成后添加至 &lt;code&gt;PATH&lt;/code&gt; 即可。如果你是 Mac 用户并使用 &lt;code&gt;homebrew&lt;/code&gt; 只需执行如下命令：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;brew install hugo
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ brew install hugo
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h3 id=&#34;本地搭建:f335be6568e4945d1f62056ad1d6d66b&#34;&gt;本地搭建&lt;/h3&gt;
 
 &lt;p&gt;创建页面：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;$ hugo new about.md
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ hugo new about.md
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;创建文章：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;$ hugo new post/first.md
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ hugo new post/first.md
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;下载全部主题：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;$ git clone --recursive https://github.com/spf13/hugoThemes themes
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ git clone --recursive https://github.com/spf13/hugoThemes themes
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;下载单个主题：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;$ mkdir themes
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ mkdir themes
 $ cd themes
 $ git clone URL_TO_THEME
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;运行 Hugo：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;$ hugo server --theme=hyde --buildDrafts
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ hugo server --theme=hyde --buildDrafts
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;或者&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;$ hugo server -t nofancy
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ hugo server -t nofancy
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;注意，默认创建的文章页面有 &lt;code&gt;draft=true&lt;/code&gt; 选项，设置为 false 才可以不通过 &lt;code&gt;--buildDrafts&lt;/code&gt; 选项生成。&lt;/p&gt;
