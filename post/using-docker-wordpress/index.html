@@ -1,0 +1,198 @@
+<html lang="en">
+<head>
+
+  
+  <meta charset="utf-8">
+  <title>docker wordpress 使用教程</title>
+  <meta name="description" content="docker wordpress 使用教程">
+  <meta name="author" content="Saint Asky">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  
+
+  
+  
+  <link rel="stylesheet" href="http://loongmxbt.github.io//css/normalize.css">
+  <link rel="stylesheet" href="http://loongmxbt.github.io//css/skeleton.css">
+  <link rel="stylesheet" href="http://loongmxbt.github.io//css/custom.css">
+
+  
+  <link rel="stylesheet" href="https://yandex.st/highlightjs/8.0/styles/default.min.css">
+  <script src="https://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+</head>
+<body>
+
+<header id="menu">
+  <div class="container">
+	<span class="logo">梦溪笔谈</span>
+	<a>&#9776;</a>
+  </div>
+</header>
+
+<nav class="navbar">
+  <div class="container">
+	<div class="row">
+	  <div class="eight columns offset-by-two">
+		<ul class="">
+		  
+		  <li class="u-pull-left"> <a href="http://loongmxbt.github.io/" class="brand" style="font-weight:bold;font-size:normal"> 梦溪笔谈 </a></li>
+		  <li class="u-pull-right cate"> <a href="http://loongmxbt.github.io//about/" class=""> About </a></li>
+		  
+		  <li class="u-pull-right cate"> <a href="http://loongmxbt.github.io//categories/docker" class=""> Docker </a></li>
+		  
+		  <li class="u-pull-right cate"> <a href="http://loongmxbt.github.io//categories/web" class=""> Web </a></li>
+		  
+		</ul>
+	  </div>
+	</div>
+  </div>
+</nav>
+
+
+<div class="container post-wrapper">
+  <div class="row">
+	<div class="eight columns offset-by-two">
+	  <div id="post-title">
+		<p class="footnote">
+		  
+		  <time class="">2015-03-07</time>
+		  
+		  
+		  |
+		  
+		  
+		  tags:<a href="http://loongmxbt.github.io//tags/docker">Docker</a> <a href="http://loongmxbt.github.io//tags/wordpress">Wordpress</a> 
+		  
+
+		  
+		  categories:<a href="http://loongmxbt.github.io//categories/web">Web</a> <a href="http://loongmxbt.github.io//categories/docker">Docker</a> 
+		  
+
+		  
+
+		</p>
+		<h5>docker wordpress 使用教程</h5>
+	  </div>
+
+	  <div class="post">
+		
+
+<h3 id="docker-wordpress-简介:cfa88cc7f5481a5e1b41baa6b0675a10">docker wordpress 简介</h3>
+
+<p>这里使用的是 Github 上 stars 数最多的 Dockfile <a href="https://github.com/eugeneware/docker-wordpress-nginx">docker-wordpress-nginx</a>，它将 nginx, mysql, php-apc, php-fpm, wordpress 等 LNMP 基础软件安装在同一个镜像中。</p>
+
+<h3 id="安装方法:cfa88cc7f5481a5e1b41baa6b0675a10">安装方法</h3>
+
+<p>最简单的安装方式是从 Docker registry 上 pull 这个镜像：</p>
+
+<pre><code class="language-bash">$ docker pull eugeneware/docker-wordpress-nginx
+</code></pre>
+
+<p>你也可以下载相应文件自己安装镜像：</p>
+
+<pre><code class="language-bash">$ git clone https://github.com/eugeneware/docker-wordpress-nginx.git
+$ cd docker-wordpress-nginx
+$ sudo docker build -t=&quot;docker-wordpress-nginx&quot; .
+</code></pre>
+
+<h3 id="使用方法:cfa88cc7f5481a5e1b41baa6b0675a10">使用方法</h3>
+
+<p>创建一个 wordpress 新实例并绑定 80 端口。<code>-p 80:80</code> 将 container 内部的 80 端口和外部宿主机的 80 端口映射起来。</p>
+
+<pre><code class="language-bash">$ sudo docker run -p 80:80 --name docker-wordpress-nginx -d docker-wordpress-nginx
+</code></pre>
+
+<p>开启你创建的 docker。</p>
+
+<pre><code class="language-bash">$ sudo docker start docker-wordpress-nginx
+</code></pre>
+
+<p>在开启 <code>docker-wordpress-nginx</code> 之后，检查端口是否正确对应。这也能显示 docker 容器和宿主机的端口映射情况。</p>
+
+<pre><code class="language-bash">$ sudo docker ps
+
+0.0.0.0:80 -&gt; 80/tcp docker-wordpress-nginx
+</code></pre>
+
+<p>你可以通过如下 URL 访问 wordpress：</p>
+
+<pre><code>http://127.0.0.1:80
+</code></pre>
+
+<h3 id="绑定域名:cfa88cc7f5481a5e1b41baa6b0675a10">绑定域名</h3>
+
+<p>假如你的虚拟机上只有一个 container，并想绑定相应域名和 IP，则你需要事先修改 <code>nginx-site.conf</code>。</p>
+
+<p>将其中的 <code>server_name localhost;</code> 修改成 <code>server_name your_domain;</code>。 然后 build 这个 docker image。</p>
+
+<h3 id="ssh-连接:cfa88cc7f5481a5e1b41baa6b0675a10">ssh 连接</h3>
+
+<p>使用 <a href="https://github.com/jpetazzo/nsenter">nsenter</a>。</p>
+
+<p>新版本 docker 可以使用命令 <code>docker exec -it bash</code></p>
+
+	  </div>
+	</div>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="container">
+	<div class="row">
+	  <div class="ten columns offset-by-two">
+		<p class="footnote">
+		  
+		  Copyright (c) 2014 - 2015, Saint Asky; all rights reserved.
+		  
+		  
+		  Find me at
+
+		  
+		  <a href="https://github.com/loongmxbt" >GitHub</a>
+		  
+
+		  
+
+		  
+		  <a href="https://twitter.com/dragonszy">Twitter</a>
+		  
+
+		  
+
+		  
+		</p>
+	  </div>
+	</div>
+  </div>
+</div>
+
+
+<script src="http://loongmxbt.github.io//js/jquery.min.js" type="text/javascript"></script>
+<script src="http://loongmxbt.github.io//js/jquery.timeago.js" type="text/javascript"></script>
+<script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script type="text/javascript">
+  $(function(){
+    $("time.timeago").timeago();
+  })
+  $("#menu").click(function(){
+    $(".brand").text("HOME");
+    $(".navbar ul li").removeClass("cate");
+    $(".navbar").toggle();
+  });
+  $(window).resize(function(){
+    if(window.innerWidth > 768) {
+      $(".navbar").removeAttr("style");
+    }
+  });
+</script>
+
+</body>
+</html>
+

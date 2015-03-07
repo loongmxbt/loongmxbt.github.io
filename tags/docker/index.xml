@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Docker on 梦溪笔谈</title>
+    <link>http://loongmxbt.github.io/tags/docker/</link>
+    <description>Recent content in Docker on 梦溪笔谈</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>Copyright (c) 2014 - 2015, Saint Asky; all rights reserved.</copyright>
+    <lastBuildDate>Sat, 07 Mar 2015 11:20:23 +0800</lastBuildDate>
+    <atom:link href="http://loongmxbt.github.io/tags/docker/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>docker wordpress 使用教程</title>
+      <link>http://loongmxbt.github.io/post/using-docker-wordpress/</link>
+      <pubDate>Sat, 07 Mar 2015 11:20:23 +0800</pubDate>
+      
+      <guid>http://loongmxbt.github.io/post/using-docker-wordpress/</guid>
+      <description>
+
+&lt;h3 id=&#34;docker-wordpress-简介:cfa88cc7f5481a5e1b41baa6b0675a10&#34;&gt;docker wordpress 简介&lt;/h3&gt;
+
+&lt;p&gt;这里使用的是 Github 上 stars 数最多的 Dockfile &lt;a href=&#34;https://github.com/eugeneware/docker-wordpress-nginx&#34;&gt;docker-wordpress-nginx&lt;/a&gt;，它将 nginx, mysql, php-apc, php-fpm, wordpress 等 LNMP 基础软件安装在同一个镜像中。&lt;/p&gt;
+
+&lt;h3 id=&#34;安装方法:cfa88cc7f5481a5e1b41baa6b0675a10&#34;&gt;安装方法&lt;/h3&gt;
+
+&lt;p&gt;最简单的安装方式是从 Docker registry 上 pull 这个镜像：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ docker pull eugeneware/docker-wordpress-nginx
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;你也可以下载相应文件自己安装镜像：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ git clone https://github.com/eugeneware/docker-wordpress-nginx.git
+$ cd docker-wordpress-nginx
+$ sudo docker build -t=&amp;quot;docker-wordpress-nginx&amp;quot; .
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;使用方法:cfa88cc7f5481a5e1b41baa6b0675a10&#34;&gt;使用方法&lt;/h3&gt;
+
+&lt;p&gt;创建一个 wordpress 新实例并绑定 80 端口。&lt;code&gt;-p 80:80&lt;/code&gt; 将 container 内部的 80 端口和外部宿主机的 80 端口映射起来。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ sudo docker run -p 80:80 --name docker-wordpress-nginx -d docker-wordpress-nginx
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;开启你创建的 docker。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ sudo docker start docker-wordpress-nginx
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;在开启 &lt;code&gt;docker-wordpress-nginx&lt;/code&gt; 之后，检查端口是否正确对应。这也能显示 docker 容器和宿主机的端口映射情况。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ sudo docker ps
+
+0.0.0.0:80 -&amp;gt; 80/tcp docker-wordpress-nginx
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;你可以通过如下 URL 访问 wordpress：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;http://127.0.0.1:80
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;绑定域名:cfa88cc7f5481a5e1b41baa6b0675a10&#34;&gt;绑定域名&lt;/h3&gt;
+
+&lt;p&gt;假如你的虚拟机上只有一个 container，并想绑定相应域名和 IP，则你需要事先修改 &lt;code&gt;nginx-site.conf&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;将其中的 &lt;code&gt;server_name localhost;&lt;/code&gt; 修改成 &lt;code&gt;server_name your_domain;&lt;/code&gt;。 然后 build 这个 docker image。&lt;/p&gt;
+
+&lt;h3 id=&#34;ssh-连接:cfa88cc7f5481a5e1b41baa6b0675a10&#34;&gt;ssh 连接&lt;/h3&gt;
+
+&lt;p&gt;使用 &lt;a href=&#34;https://github.com/jpetazzo/nsenter&#34;&gt;nsenter&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;新版本 docker 可以使用命令 &lt;code&gt;docker exec -it bash&lt;/code&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
