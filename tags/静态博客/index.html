@@ -45,6 +45,8 @@
 		  
 		  <li class="u-pull-right cate"> <a href="http://loongmxbt.github.io//categories/docker" class=""> Docker </a></li>
 		  
+		  <li class="u-pull-right cate"> <a href="http://loongmxbt.github.io//categories/math" class=""> Math </a></li>
+		  
 		  <li class="u-pull-right cate"> <a href="http://loongmxbt.github.io//categories/web" class=""> Web </a></li>
 		  
 		</ul>
@@ -128,6 +130,27 @@
 <script src="http://loongmxbt.github.io//js/jquery.timeago.js" type="text/javascript"></script>
 <script type="text/javascript"
   src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[','\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+</script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
 </script>
 <script type="text/javascript">
   $(function(){

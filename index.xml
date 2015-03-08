@@ -7,8 +7,110 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>Copyright (c) 2014 - 2015, Saint Asky; all rights reserved.</copyright>
-    <lastBuildDate>Sat, 07 Mar 2015 11:20:23 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 07 Mar 2015 16:40:06 +0800</lastBuildDate>
     <atom:link href="http://loongmxbt.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>全局优化简介</title>
+      <link>http://loongmxbt.github.io/post/global-optimization-introduction/</link>
+      <pubDate>Sat, 07 Mar 2015 16:40:06 +0800</pubDate>
+      
+      <guid>http://loongmxbt.github.io/post/global-optimization-introduction/</guid>
+      <description>
+
+&lt;h3 id=&#34;局部最优和全局最优:0788aa7c5100bfe30be9711cc6d62388&#34;&gt;局部最优和全局最优&lt;/h3&gt;
+
+&lt;p&gt;优化问题的目的是寻找一个点使得目标函数达到最小值。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;局部最优点：该点的目标函数值比相邻的点都要小或者相等。&lt;/li&gt;
+&lt;li&gt;全局最优点：该点的目标函数值比其他所有可能点都要小或相等。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://loongmxbt.qiniudn.com/local_vs_global.png&#34; alt=&#34;local_vs_global&#34; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Matlab 提供的 Optimization Toolbox 能寻找局部最优点。它能找到初始点所在的吸引域（basin of attraction）的最优点。&lt;/p&gt;
+
+&lt;p&gt;Global Optimization Toolbox 寻找多余一个的吸引域的最优点。它可以采用如下几种方法：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;GlobalSearch 和 MultiStart 产生多个初始点，然后使用局部求解器找到位于初始点所在的吸引域的最优点。&lt;/li&gt;
+&lt;li&gt;ga 使用一组初始点集（也叫种群 population），通过迭代在种群中产生更加好的点。初始种群覆盖了多少吸引域，ga 就能搜索到这些域。&lt;/li&gt;
+&lt;li&gt;simulannealbnd 进行随机搜索。一般而言，simulannealbnd 接受比之前更好的点，但它也会偶尔接受较坏的点，来达到不同的吸引域。&lt;/li&gt;
+&lt;li&gt;patternsearch 在接受一个点之前先查看一组相邻的点。如果一些相邻点属于不同的吸引域，那么 patternsearch 同时查找一系列吸引域。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;吸引域:0788aa7c5100bfe30be9711cc6d62388&#34;&gt;吸引域&lt;/h3&gt;
+
+&lt;p&gt;如果目标函数 $f(x)$ 是平滑的，那么梯度 $–\nabla f(x)$ 的方向是其下降最快的方向。&lt;/p&gt;
+
+&lt;p&gt;$$ \frac{\mathrm{d}}{\mathrm{d}t}x(t) = -\nabla f(x(t))$$&lt;/p&gt;
+
+&lt;p&gt;根据此式可以得出一条路径 $x(t)$ 随着 $t$ 的增加而趋向于局部最小点。一般来说，相互靠近的 $x(0)$ 的最速降线会趋向于同一个最小点。吸引域中的初始点的各最速降线会趋向同一个局部最小点。&lt;/p&gt;
+
+&lt;p&gt;下图显示了两个一维的最小点。该图用不同的线型代表了不同的吸引域，并用箭头显示不同的最速降线。其中黑点代表了局部最小点。每条从 $x(0)$ 起始的最速降线，最终都会达到吸引域中的黑点。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://loongmxbt.qiniudn.com/one_d1.png&#34; alt=&#34;one_d1.png&#34; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;下图展示了在多维情况下的最速降线。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://loongmxbt.qiniudn.com/basin1.png&#34; alt=&#34;basin1&#34; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;下图展示了更复杂的路径和吸引域。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://loongmxbt.qiniudn.com/basins1.png&#34; alt=&#34;basins1&#34; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;限制可以将一个吸引域分割成几个部分。例如，考虑最小化 $y$ 满足：&lt;/p&gt;
+
+&lt;div&gt;$$
+\begin{align}
+y &amp; \geq |x|  \\
+y &amp; \geq 5 - 4(x-2)^2 
+\end{align}
+$$&lt;/div&gt;
+
+&lt;p&gt;该图展示了两个含有终点的吸引域。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://loongmxbt.qiniudn.com/steepest_descent_barrier.png&#34; alt=&#34;steepest_descent_barrier&#34; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;绘制该图的代码：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-matlab&#34;&gt;syms x y
+myabs = abs(x);
+mycurve = 5 - 4*(x-2)^2;
+myline = feval(symengine,&#39;max&#39;,myabs,mycurve);
+mybrdr = 1 + heaviside(x-2);
+myarea = heaviside(y - myline)*mybrdr;
+% myarea = 0 where infeasible, 1 when x &amp;lt; 2, 2 when x &amp;gt; 2
+marinv = 1/myarea; % removes the infeasible region
+
+plot(0,0,&#39;k.&#39;,&#39;MarkerSize&#39;,25);
+hold on
+plot(11/4,11/4,&#39;k.&#39;,&#39;MarkerSize&#39;,25);
+ezplot(mycurve,[.9 3])
+ezplot(myabs,[-2 5])
+ezsurf(marinv,[-2,5,-1,6],500)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Enter plottools at the command line to edit the figure properties:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Set Edges of the colored area to no line.&lt;/li&gt;
+&lt;li&gt;From the More properties button, set FaceAlpha to 0.5.&lt;/li&gt;
+&lt;li&gt;Set the curve widths to 2, and their color to Black.&lt;/li&gt;
+&lt;li&gt;Add arrows using the arrow drawing tool.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The steepest descent paths are straight lines down to the constraint boundaries. From the constraint boundaries, the steepest descent paths travel down along the boundaries. The final point is either (0,0) or (&lt;sup&gt;11&lt;/sup&gt;&amp;frasl;&lt;sub&gt;4&lt;/sub&gt;,&lt;sup&gt;11&lt;/sup&gt;&amp;frasl;&lt;sub&gt;4&lt;/sub&gt;), depending on whether the initial x-value is above or below 2.&lt;/p&gt;
+
+&lt;p&gt;来源：&lt;a href=&#34;http://cn.mathworks.com/help/gads/what-is-global-optimization.html&#34;&gt;What Is Global Optimization?&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>docker wordpress 使用教程</title>
@@ -195,12 +297,55 @@ cd ..
 
 &lt;h3 id=&#34;增加数学公式支持:f335be6568e4945d1f62056ad1d6d66b&#34;&gt;增加数学公式支持&lt;/h3&gt;
 
+&lt;p&gt;&lt;a href=&#34;http://mlworks.cn/posts/introduction-to-mathjax-and-latex-expression/&#34;&gt;这篇文章&lt;/a&gt;有详细的 MathJax 和 LaTeX 简介。&lt;/p&gt;
+
 &lt;p&gt;将以下代码添加至 &lt;code&gt;themes/theme-name/layouts/partials/footer.html&lt;/code&gt;&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;&amp;lt;script type=&amp;quot;text/javascript&amp;quot;
   src=&amp;quot;https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&amp;quot;&amp;gt;
 &amp;lt;/script&amp;gt;
+
+&amp;lt;script type=&amp;quot;text/x-mathjax-config&amp;quot;&amp;gt;
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [[&#39;$&#39;,&#39;$&#39;], [&#39;\\(&#39;,&#39;\\)&#39;]],
+    displayMath: [[&#39;$$&#39;,&#39;$$&#39;], [&#39;\[&#39;,&#39;\]&#39;]],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: [&#39;script&#39;, &#39;noscript&#39;, &#39;style&#39;, &#39;textarea&#39;, &#39;pre&#39;],
+    TeX: { equationNumbers: { autoNumber: &amp;quot;AMS&amp;quot; },
+         extensions: [&amp;quot;AMSmath.js&amp;quot;, &amp;quot;AMSsymbols.js&amp;quot;] }
+  }
+});
+&amp;lt;/script&amp;gt;
+
+&amp;lt;script type=&amp;quot;text/x-mathjax-config&amp;quot;&amp;gt;
+  MathJax.Hub.Queue(function() {
+    // Fix &amp;lt;code&amp;gt; tags after MathJax finishes running. This is a
+    // hack to overcome a shortcoming of Markdown. Discussion at
+    // https://github.com/mojombo/jekyll/issues/199
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i &amp;lt; all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += &#39; has-jax&#39;;
+    }
+});
+&amp;lt;/script&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;增加相应的 css&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-css&#34;&gt;code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;使用方法：&lt;/p&gt;
+
+&lt;p&gt;若 Markdown 语法与 MathJax 语法冲突时，对于 inline 公式，可以在原先两个&lt;code&gt;$&lt;/code&gt;之外加上两个&lt;code&gt;`&lt;/code&gt;代表 code。对于 display 公式，可以在原先两个&lt;code&gt;$$&lt;/code&gt;之外加上&lt;code&gt;&amp;lt;div&amp;gt;&lt;/code&gt;和&lt;code&gt;&amp;lt;/div&amp;gt;&lt;/code&gt;。这样所有的公式就可以仅执行 MathJax 解析了。&lt;/p&gt;
 </description>
     </item>
     
