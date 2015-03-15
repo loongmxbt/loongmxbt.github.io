@@ -7,8 +7,59 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>Copyright (c) 2014 - 2015, Saint Asky; all rights reserved.</copyright>
-    <lastBuildDate>Sat, 07 Mar 2015 11:20:23 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 15 Mar 2015 10:58:33 +0800</lastBuildDate>
     <atom:link href="http://loongmxbt.github.io/categories/web/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>国内部署服务器环境被墙解决方案</title>
+      <link>http://loongmxbt.github.io/post/server-deploy-break-wall/</link>
+      <pubDate>Sun, 15 Mar 2015 10:58:33 +0800</pubDate>
+      
+      <guid>http://loongmxbt.github.io/post/server-deploy-break-wall/</guid>
+      <description>
+
+&lt;h3 id=&#34;服务器部署问题:1b8e73342e272a8138ea300a0cc66545&#34;&gt;服务器部署问题&lt;/h3&gt;
+
+&lt;p&gt;在国内服务器部署时，通常会遇到源被墙等问题，通常只是 GFW 的无差别 DNS 污染造成的，和域名屏蔽 IP 封锁还是不一样的，所以通常可以通过修改本机或服务器的 DNS 地址来解决。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;11:04:40.741350 host.go:130: tuf: failed to download v1/images/ceb6da07e96d7c6e732af955c9b6f64618b4c3a3cf7c7b2a7cdad07e8af227b3/layer: read tcp 54.230.159.50:443: connection reset by peer
+===&amp;gt; 11:04:40.778 ERROR: failed to run &amp;quot;/usr/local/bin/flynn-host download --repository https://dl.flynn.io/tuf --tuf-db /etc/flynn/tuf.db --config-dir /etc/flynn --bin-dir /usr/local/bin&amp;quot;, exit status 1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;应该是网络问题，每次中断处不一样。&lt;/p&gt;
+
+&lt;h3 id=&#34;百度公共-dns:1b8e73342e272a8138ea300a0cc66545&#34;&gt;百度公共 DNS&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;以下设置对所用的Linux系统如 Redhat/Ubuntu/Debian/CentOS 等都有效，但您必须是管理员 root 或者具有管理员权限&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ vim /etc/resolv.conf
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;在其中加入:&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code&gt;nameserver 180.76.76.76
+nameserver 114.114.114.114
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;保存退出，使用 nslookup 或者 dig 验证是否可以通过 &lt;code&gt;180.76.76.76&lt;/code&gt; 正常解析 &lt;code&gt;www.baidu.com&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;更改镜像源:1b8e73342e272a8138ea300a0cc66545&#34;&gt;更改镜像源&lt;/h3&gt;
+
+&lt;p&gt;大部分开源软件镜像在淘宝上都有相应的国内镜像源，可以修改程序镜像源的地址来实现部署。&lt;/p&gt;
+
+&lt;p&gt;比如 rails 开发可以设置 &lt;code&gt;http://ruby.taobao.org&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;反向代理至国外服务器:1b8e73342e272a8138ea300a0cc66545&#34;&gt;反向代理至国外服务器&lt;/h3&gt;
+
+&lt;h3 id=&#34;使用-proxychains-执行命令:1b8e73342e272a8138ea300a0cc66545&#34;&gt;使用 proxychains 执行命令&lt;/h3&gt;
+</description>
+    </item>
     
     <item>
       <title>docker wordpress 使用教程</title>

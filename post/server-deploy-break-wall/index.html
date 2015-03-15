@@ -3,8 +3,8 @@
 
   
   <meta charset="utf-8">
-  <title>Optimization</title>
-  <meta name="description" content="Optimization">
+  <title>国内部署服务器环境被墙解决方案</title>
+  <meta name="description" content="国内部署服务器环境被墙解决方案">
   <meta name="author" content="Saint Asky">
 
   
@@ -58,41 +58,76 @@
 </nav>
 
 
-
-<div class="container away">
+<div class="container post-wrapper">
   <div class="row">
 	<div class="eight columns offset-by-two">
-	  <p style="margin-bottom:1em;font-weight:bold;color:#333">Optimization:</p>
+	  <div id="post-title">
+		<p class="footnote">
+		  
+		  <time class="">2015-03-15</time>
+		  
+		  
+		  |
+		  
+		  
+		  tags:<a href="http://loongmxbt.github.io//tags/linux">Linux</a> <a href="http://loongmxbt.github.io//tags/deploy">Deploy</a> <a href="http://loongmxbt.github.io//tags/gfw">GFW</a> 
+		  
 
-	  <ul class="posts">
+		  
+		  categories:<a href="http://loongmxbt.github.io//categories/web">Web</a> <a href="http://loongmxbt.github.io//categories/linux">Linux</a> 
+		  
+
+		  
+
+		</p>
+		<h5>国内部署服务器环境被墙解决方案</h5>
+	  </div>
+
+	  <div class="post">
 		
-		
-		
-		<li>
-		  <a href="http://loongmxbt.github.io/post/global-optimization-introduction/">全局优化简介</a>
 
-		  <p class="footnote">
-			submitted <time datetime="2015-03-07T16:40:06&#43;08:00" class="pull-right post-list timeago">2015-03-07T16:40:06&#43;08:00</time>
+<h3 id="服务器部署问题:1b8e73342e272a8138ea300a0cc66545">服务器部署问题</h3>
 
-			
-			to
-			
+<p>在国内服务器部署时，通常会遇到源被墙等问题，通常只是 GFW 的无差别 DNS 污染造成的，和域名屏蔽 IP 封锁还是不一样的，所以通常可以通过修改本机或服务器的 DNS 地址来解决。</p>
 
-			
-			tags:[ <a href="http://loongmxbt.github.io//tags/matlab">Matlab</a> <a href="http://loongmxbt.github.io//tags/optimization">Optimization</a> ]
-			
+<pre><code class="language-bash">11:04:40.741350 host.go:130: tuf: failed to download v1/images/ceb6da07e96d7c6e732af955c9b6f64618b4c3a3cf7c7b2a7cdad07e8af227b3/layer: read tcp 54.230.159.50:443: connection reset by peer
+===&gt; 11:04:40.778 ERROR: failed to run &quot;/usr/local/bin/flynn-host download --repository https://dl.flynn.io/tuf --tuf-db /etc/flynn/tuf.db --config-dir /etc/flynn --bin-dir /usr/local/bin&quot;, exit status 1
+</code></pre>
 
-			
-			categories:[ <a href="http://loongmxbt.github.io//categories/math">Math</a> ]
-			
+<p>应该是网络问题，每次中断处不一样。</p>
 
-			
+<h3 id="百度公共-dns:1b8e73342e272a8138ea300a0cc66545">百度公共 DNS</h3>
 
-		  </p>
-		</li>
-		
-		
-	  </ul>
+<ol>
+<li>以下设置对所用的Linux系统如 Redhat/Ubuntu/Debian/CentOS 等都有效，但您必须是管理员 root 或者具有管理员权限</li>
+</ol>
+
+<pre><code class="language-bash">$ vim /etc/resolv.conf
+</code></pre>
+
+<ol>
+<li>在其中加入:</li>
+</ol>
+
+<pre><code>nameserver 180.76.76.76
+nameserver 114.114.114.114
+</code></pre>
+
+<ol>
+<li>保存退出，使用 nslookup 或者 dig 验证是否可以通过 <code>180.76.76.76</code> 正常解析 <code>www.baidu.com</code></li>
+</ol>
+
+<h3 id="更改镜像源:1b8e73342e272a8138ea300a0cc66545">更改镜像源</h3>
+
+<p>大部分开源软件镜像在淘宝上都有相应的国内镜像源，可以修改程序镜像源的地址来实现部署。</p>
+
+<p>比如 rails 开发可以设置 <code>http://ruby.taobao.org</code></p>
+
+<h3 id="反向代理至国外服务器:1b8e73342e272a8138ea300a0cc66545">反向代理至国外服务器</h3>
+
+<h3 id="使用-proxychains-执行命令:1b8e73342e272a8138ea300a0cc66545">使用 proxychains 执行命令</h3>
+
+	  </div>
 	</div>
   </div>
 </div>
